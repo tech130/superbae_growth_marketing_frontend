@@ -124,11 +124,123 @@ const modules: NavModule[] = [
       },
     ],
   },
+  {
+    key: "referral",
+    label: "Referral Management",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [
+          { href: "/referral/dashboard", label: "Referral Dashboard" },
+          { href: "/referral/funnel", label: "Conversion Funnel" },
+          { href: "/referral/leaderboard", label: "Leaderboard" },
+        ],
+      },
+      {
+        label: "Program Setup",
+        items: [
+          { href: "/referral/program-settings", label: "Program Settings" },
+          { href: "/referral/rules", label: "Referral Rules" },
+          { href: "/referral/types", label: "Reward Types" },
+          { href: "/referral/codes", label: "Referral Codes" },
+          { href: "/referral/links", label: "Referral Links" },
+        ],
+      },
+      {
+        label: "Tracking & Approvals",
+        items: [
+          { href: "/referral/pending", label: "Pending Referrals" },
+          { href: "/referral/successful", label: "Successful Referrals" },
+          { href: "/referral/rejected", label: "Rejected Referrals" },
+        ],
+      },
+      {
+        label: "Rewards & Wallet",
+        items: [
+          { href: "/referral/rewards", label: "Reward Ledger" },
+          { href: "/referral/wallet", label: "Wallet Lookup" },
+        ],
+      },
+      {
+        label: "Trust & History",
+        items: [
+          { href: "/referral/fraud", label: "Fraud Detection" },
+          { href: "/referral/history", label: "Referral History" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "brand",
+    label: "Partner / Brand Management",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [{ href: "/brand/dashboard", label: "Brand Dashboard" }],
+      },
+      {
+        label: "Partners",
+        items: [
+          { href: "/brand", label: "Brand List" },
+          { href: "/brand/new", label: "Add Brand" },
+          { href: "/brand/verification", label: "Brand Verification" },
+        ],
+      },
+      {
+        label: "Promotions & Offers",
+        items: [
+          { href: "/brand/campaigns", label: "Brand Campaigns" },
+          { href: "/brand/offers", label: "Brand Offers" },
+          { href: "/brand/coupons", label: "Coupons" },
+          { href: "/brand/promo-codes", label: "Brand Promo Codes" },
+        ],
+      },
+      {
+        label: "Performance & Finance",
+        items: [
+          { href: "/brand/performance", label: "Brand Performance" },
+          { href: "/brand/revenue", label: "Brand Revenue" },
+          { href: "/brand/payouts", label: "Brand Payouts" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "promo",
+    label: "Promo Code Management",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [{ href: "/promo/dashboard", label: "Promo Dashboard" }],
+      },
+      {
+        label: "Setup & Management",
+        items: [
+          { href: "/promo", label: "Promo Code List" },
+          { href: "/promo/new", label: "Create Promo Code" },
+          { href: "/promo/usage-history", label: "Usage History" },
+          { href: "/promo/expired", label: "Expired Codes" },
+        ],
+      },
+      {
+        label: "Source Breakdown",
+        items: [
+          { href: "/promo/referral", label: "Referral Codes" },
+          { href: "/promo/affiliate", label: "Affiliate Codes" },
+          { href: "/promo/creator", label: "Creator Codes" },
+          { href: "/promo/campaign", label: "Campaign Codes" },
+        ],
+      },
+    ],
+  },
 ];
 
 function moduleForPath(pathname: string): string {
   if (pathname.startsWith("/creators")) return "creators";
   if (pathname.startsWith("/campaign-management")) return "campaign-management";
+  if (pathname.startsWith("/referral")) return "referral";
+  if (pathname.startsWith("/brand")) return "brand";
+  if (pathname.startsWith("/promo")) return "promo";
   return "affiliates";
 }
 

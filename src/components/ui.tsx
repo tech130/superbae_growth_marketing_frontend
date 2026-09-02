@@ -139,9 +139,16 @@ export function Table({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Th({ children }: { children: React.ReactNode }) {
+export function Th({
+  children,
+  className = "",
+  ...props
+}: React.ThHTMLAttributes<HTMLTableCellElement> & { children: React.ReactNode; className?: string }) {
   return (
-    <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wide text-[var(--muted)] font-semibold border-b border-[var(--line)]">
+    <th
+      className={`text-left px-4 py-2.5 text-[11px] uppercase tracking-wide text-[var(--muted)] font-semibold border-b border-[var(--line)] ${className}`}
+      {...props}
+    >
       {children}
     </th>
   );
