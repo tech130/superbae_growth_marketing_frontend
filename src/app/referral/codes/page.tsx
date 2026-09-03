@@ -32,7 +32,7 @@ export default function ReferralCodesPage() {
       if (search.trim()) params.append("search", search.trim());
       if (statusFilter) params.append("status", statusFilter);
       const qs = params.toString() ? `?${params.toString()}` : "";
-      const data = await api.djangoGet<ReferralCodeItem[]>(`/admin/referral-codes/${qs}`);
+      const data = await api.get<ReferralCodeItem[]>(`/admin/referral-codes/${qs}`);
       setCodes(data || []);
       setNotice(null);
     } catch (err: any) {
@@ -55,7 +55,7 @@ export default function ReferralCodesPage() {
   const handleToggleStatus = async (codeItem: ReferralCodeItem) => {
     const nextAction = codeItem.status === "active" ? "disable" : "enable";
     try {
-      await api.djangoPatch(`/admin/referral-codes/${codeItem.id}/${nextAction}/`);
+      await api.patch(`/admin/referral-codes/${codeItem.id}/${nextAction}/`);
       setNotice({ text: `Code ${codeItem.code} set to ${nextAction}d.`, type: "success" });
       await loadCodes();
     } catch (err: any) {
@@ -66,7 +66,7 @@ export default function ReferralCodesPage() {
   const handleRegenerate = async (codeId: number) => {
     if (!confirm("Regenerating this code will invalidate the old code and update associated links. Proceed?")) return;
     try {
-      const updated = await api.djangoPost<ReferralCodeItem>(`/admin/referral-codes/${codeId}/regenerate/`);
+      const updated = await api.post<ReferralCodeItem>(`/admin/referral-codes/${codeId}/regenerate/`);
       setNotice({ text: `New code generated: ${updated.code}`, type: "success" });
       await loadCodes();
     } catch (err: any) {

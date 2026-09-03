@@ -31,7 +31,7 @@ export default function ReferralLinksPage() {
   const loadLinks = async () => {
     try {
       setLoading(true);
-      const data = await api.djangoGet<ReferralLinkItem[]>("/admin/referral-links/");
+      const data = await api.get<ReferralLinkItem[]>("/admin/referral-links/");
       setLinks(data || []);
       setNotice(null);
     } catch (err: any) {
@@ -51,7 +51,7 @@ export default function ReferralLinksPage() {
   const handleDisableLink = async (linkId: number) => {
     if (!confirm("Are you sure you want to disable this referral link?")) return;
     try {
-      await api.djangoPatch(`/admin/referral-links/${linkId}/disable/`);
+      await api.patch(`/admin/referral-links/${linkId}/disable/`);
       setNotice({ text: "Referral link disabled successfully.", type: "success" });
       await loadLinks();
     } catch (err: any) {
@@ -62,7 +62,7 @@ export default function ReferralLinksPage() {
   const handleShowQr = async (linkId: number) => {
     try {
       setQrLoading(true);
-      const res = await api.djangoPost<{ url: string; image: string }>(`/admin/referral-links/${linkId}/qr/`);
+      const res = await api.post<{ url: string; image: string }>(`/admin/referral-links/${linkId}/qr/`);
       setQrData(res);
     } catch (err: any) {
       setNotice({ text: err.message || "Could not generate QR code.", type: "error" });

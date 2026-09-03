@@ -218,6 +218,165 @@ export interface FraudFlag {
   createdAt: string;
 }
 
+// ===================================================================
+// Payout Management (Part 1, full spec)
+// ===================================================================
+export interface PayoutManagement {
+  id: string;
+  affiliateId: string;
+  affiliate: string;
+  partnerType: "Affiliate" | "Creator" | "Brand";
+  partnerCategory?: string;
+  amount: number;
+  method: string;
+  status: "Pending" | "Approved" | "Processing" | "Completed" | "Failed";
+  commissionIds: string[];
+  initiatedOn: string;
+  completedOn?: string;
+  failureReason?: string;
+  scheduledDate?: string;
+  approvedOn?: string;
+  approvedBy?: string;
+  referenceId?: string;
+  taxDeducted?: number;
+  netAmount?: number;
+  invoiceNumber?: string;
+  invoiceGeneratedAt?: string;
+}
+
+// ===================================================================
+// Fraud Detection (Part 2, full spec)
+// ===================================================================
+export interface FraudCase {
+  id: string;
+  sourceType: "Referral" | "Affiliate" | "Creator" | "Brand";
+  subjectId: string;
+  subjectLabel: string;
+  relatedSubjectId?: string;
+  relatedSubjectLabel?: string;
+  fraudType: "Device" | "IP" | "Account" | "SelfReferral" | "AbnormalConversion" | "RewardAbuse" | "AffiliateAbuse" | "Generic";
+  deviceId?: string;
+  ip?: string;
+  linkedIds?: string[];
+  relatedConversionId?: string;
+  riskScore: number;
+  riskLevel: "LOW" | "MEDIUM" | "HIGH";
+  reasons: string[];
+  holdType?: "Reward" | "Commission";
+  holdAmount?: number;
+  status: "Flagged" | "Investigating" | "On Hold" | "Confirmed Fraud" | "Legitimate";
+  createdAt: string;
+  resolvedAt?: string;
+  notes: { id: string; text: string; author: string; at: string }[];
+}
+
+// ===================================================================
+// Landing Pages & Deep Links
+// ===================================================================
+export interface LandingPage {
+  id: string;
+  name: string;
+  templateId?: string;
+  sourceType: "Campaign" | "Referral" | "Affiliate" | "Creator" | "Manual";
+  linkedRefId?: string;
+  linkedRefLabel?: string;
+  headline?: string;
+  body?: string;
+  cta?: string;
+  deepLinkId?: string;
+  trackingParams: { source: string; medium: string; code?: string };
+  status: "Draft" | "Active" | "Paused";
+  visits: number;
+  installs: number;
+  signups: number;
+  createdAt: string;
+}
+export interface LandingPageTemplate {
+  id: string;
+  name: string;
+  bestFor: string;
+  sections: string[];
+  status: "Active" | "Archived";
+}
+export interface DeepLink {
+  id: string;
+  scheme: string;
+  opensInApp: string;
+  sourceType: string;
+  deferred: boolean;
+  targetRoute: string;
+  fallbackUrl?: string;
+  status: "Active" | "Disabled";
+  clicks: number;
+  opens: number;
+  createdAt: string;
+}
+export interface QRCodeRow {
+  id: string;
+  linkedType: "LandingPage" | "DeepLink";
+  linkedId: string;
+  linkedLabel: string;
+  scans: number;
+  installs: number;
+  status: "Active" | "Disabled";
+  createdAt: string;
+}
+
+// ===================================================================
+// Loyalty Program
+// ===================================================================
+export interface LoyaltyTier {
+  id: string;
+  name: string;
+  order: number;
+  thresholdPoints: number;
+  status: "Active" | "Inactive";
+}
+export interface LoyaltyRule {
+  id: string;
+  name: string;
+  trigger: string;
+  rewardType: "points" | "wallet_credit";
+  points?: number;
+  walletAmount?: number;
+  limit: string;
+  status: "Active" | "Inactive";
+}
+export interface LoyaltyReward {
+  id: string;
+  name: string;
+  type: "wallet_credit" | "premium_days" | "coupon";
+  costPoints: number;
+  minTierId: string;
+  minTierName?: string;
+  value?: string;
+  status: "Active" | "Disabled";
+}
+export interface LoyaltyBenefit {
+  id: string;
+  name: string;
+  minTierId: string;
+  minTierName?: string;
+  type: "discount" | "support" | "access" | "content";
+  status: "Active" | "Disabled";
+}
+export interface UserLoyaltyRow {
+  id: string;
+  userEmail: string;
+  userName: string;
+  tierId: string;
+  tierName?: string;
+  nextTierName?: string;
+  pointsToNextTier?: number;
+  pointsBalance: number;
+  pointsEarnedTotal: number;
+  pointsRedeemedTotal: number;
+  pointsExpired: number;
+  joinedAt: string;
+  lastActivityAt: string;
+  status: "Active" | "Inactive";
+}
+
 export interface DashboardData {
   kpis: {
     totalAffiliates: number;

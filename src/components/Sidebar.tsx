@@ -11,7 +11,7 @@ type NavModule = { key: string; label: string; subGroups: NavSubGroup[] };
 const modules: NavModule[] = [
   {
     key: "affiliates",
-    label: "Affiliates",
+    label: "Affiliates Management & Commission Engine",
     subGroups: [
       {
         label: "Overview",
@@ -233,6 +233,175 @@ const modules: NavModule[] = [
       },
     ],
   },
+  {
+    key: "payout-management",
+    label: "Payout Management",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [{ href: "/payout-management", label: "Payout Dashboard" }],
+      },
+      {
+        label: "Queue",
+        items: [
+          { href: "/payout-management/pending", label: "Pending Payouts" },
+          { href: "/payout-management/approved", label: "Approved Payouts" },
+          { href: "/payout-management/processing", label: "Processing" },
+          { href: "/payout-management/completed", label: "Completed" },
+          { href: "/payout-management/failed", label: "Failed" },
+        ],
+      },
+      {
+        label: "By Partner",
+        items: [
+          { href: "/payout-management/affiliate", label: "Affiliate Payouts" },
+          { href: "/payout-management/creator", label: "Creator Payouts" },
+          { href: "/payout-management/brand", label: "Brand Payouts" },
+        ],
+      },
+      {
+        label: "Compliance",
+        items: [{ href: "/payout-management/tax-invoice", label: "Tax / Invoice Details" }],
+      },
+    ],
+  },
+  {
+    key: "fraud-detection",
+    label: "Fraud Detection",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [
+          { href: "/fraud-detection", label: "Fraud Dashboard" },
+          { href: "/fraud-detection/suspicious-referrals", label: "Suspicious Referrals" },
+        ],
+      },
+      {
+        label: "Signals",
+        items: [
+          { href: "/fraud-detection/duplicate-devices", label: "Duplicate Devices" },
+          { href: "/fraud-detection/duplicate-accounts", label: "Duplicate Accounts" },
+          { href: "/fraud-detection/suspicious-ips", label: "Suspicious IPs" },
+          { href: "/fraud-detection/self-referrals", label: "Self-Referrals" },
+          { href: "/fraud-detection/abnormal-conversion", label: "Abnormal Conversion" },
+        ],
+      },
+      {
+        label: "Abuse Patterns",
+        items: [
+          { href: "/fraud-detection/reward-abuse", label: "Reward Abuse" },
+          { href: "/fraud-detection/affiliate-abuse", label: "Affiliate Abuse" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "landing-pages",
+    label: "Landing Pages & Deep Links",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [{ href: "/landing-pages", label: "Landing Page Dashboard" }],
+      },
+      {
+        label: "Build",
+        items: [
+          { href: "/landing-pages/create", label: "Create Landing Page" },
+          { href: "/landing-pages/templates", label: "Templates" },
+        ],
+      },
+      {
+        label: "By Source",
+        items: [
+          { href: "/landing-pages/campaign", label: "Campaign Landing Pages" },
+          { href: "/landing-pages/referral", label: "Referral Landing Pages" },
+          { href: "/landing-pages/affiliate", label: "Affiliate Landing Pages" },
+        ],
+      },
+      {
+        label: "Routing",
+        items: [
+          { href: "/landing-pages/deep-links", label: "Deep Links" },
+          { href: "/landing-pages/qr-codes", label: "QR Codes" },
+        ],
+      },
+      {
+        label: "Insights",
+        items: [{ href: "/landing-pages/analytics", label: "Link Analytics" }],
+      },
+    ],
+  },
+  {
+    key: "attribution",
+    label: "Attribution Dashboard",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [
+          { href: "/attribution", label: "Attribution Dashboard" },
+          { href: "/attribution/source-analytics", label: "Source Analytics" },
+        ],
+      },
+      {
+        label: "By Source",
+        items: [
+          { href: "/attribution/referral", label: "Referral Attribution" },
+          { href: "/attribution/influencer", label: "Influencer Attribution" },
+          { href: "/attribution/campaign", label: "Campaign Attribution" },
+        ],
+      },
+      {
+        label: "Models",
+        items: [
+          { href: "/attribution/first-touch", label: "First-Touch Attribution" },
+          { href: "/attribution/last-touch", label: "Last-Touch Attribution" },
+          { href: "/attribution/conversion-paths", label: "Conversion Paths" },
+        ],
+      },
+      {
+        label: "Finance",
+        items: [{ href: "/attribution/revenue", label: "Revenue Attribution" }],
+      },
+    ],
+  },
+  {
+    key: "loyalty",
+    label: "Loyalty Program",
+    subGroups: [
+      {
+        label: "Overview",
+        items: [{ href: "/loyalty", label: "Loyalty Dashboard" }],
+      },
+      {
+        label: "Program Setup",
+        items: [
+          { href: "/loyalty/rules", label: "Loyalty Rules" },
+          { href: "/loyalty/tiers", label: "Tiers" },
+        ],
+      },
+      {
+        label: "Members & Points",
+        items: [
+          { href: "/loyalty/members", label: "User Tier List" },
+          { href: "/loyalty/points", label: "Points" },
+        ],
+      },
+      {
+        label: "Rewards",
+        items: [
+          { href: "/loyalty/rewards", label: "Rewards" },
+          { href: "/loyalty/benefits", label: "Benefits" },
+        ],
+      },
+      {
+        label: "Engagement",
+        items: [
+          { href: "/loyalty/leaderboard", label: "Leaderboard" },
+          { href: "/loyalty/redemptions", label: "Redemption History" },
+        ],
+      },
+    ],
+  },
 ];
 
 function moduleForPath(pathname: string): string {
@@ -241,6 +410,11 @@ function moduleForPath(pathname: string): string {
   if (pathname.startsWith("/referral")) return "referral";
   if (pathname.startsWith("/brand")) return "brand";
   if (pathname.startsWith("/promo")) return "promo";
+  if (pathname.startsWith("/payout-management")) return "payout-management";
+  if (pathname.startsWith("/fraud-detection")) return "fraud-detection";
+  if (pathname.startsWith("/landing-pages")) return "landing-pages";
+  if (pathname.startsWith("/attribution")) return "attribution";
+  if (pathname.startsWith("/loyalty")) return "loyalty";
   return "affiliates";
 }
 

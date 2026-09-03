@@ -43,12 +43,12 @@ export default function ProgramSettingsPage() {
   const loadSettings = async () => {
     try {
       setLoading(true);
-      const data = await api.djangoGet<Settings>("/admin/referral-settings/");
+      const data = await api.get<Settings>("/admin/referral-settings/");
       setSettings(data || {});
       setNotice(null);
     } catch (err: any) {
       setNotice({
-        text: err.message || "Could not reach Django API.",
+        text: err.message || "Could not reach the API.",
         type: "error",
       });
     } finally {
@@ -64,7 +64,7 @@ export default function ProgramSettingsPage() {
     e.preventDefault();
     try {
       setSaving(true);
-      const updated = await api.djangoPut<Settings>("/admin/referral-settings/", settings);
+      const updated = await api.put<Settings>("/admin/referral-settings/", settings);
       setSettings(updated);
       setNotice({ text: "Programme settings saved successfully.", type: "success" });
     } catch (err: any) {

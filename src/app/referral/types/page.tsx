@@ -48,8 +48,8 @@ export default function ReferralTypesPage() {
     try {
       setLoading(true);
       const [typesData, configData] = await Promise.all([
-        api.djangoGet<RewardType[]>("/admin/reward-types/"),
-        api.djangoGet<PointsConfig>("/admin/points-config/").catch(() => null),
+        api.get<RewardType[]>("/admin/reward-types/"),
+        api.get<PointsConfig>("/admin/points-config/").catch(() => null),
       ]);
       setTypes(typesData || []);
       if (configData) setPointsConfig(configData);
@@ -71,7 +71,7 @@ export default function ReferralTypesPage() {
   const handleCreateType = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await api.djangoPost("/admin/reward-types/", newType);
+      await api.post("/admin/reward-types/", newType);
       setNotice({ text: "Reward type created successfully.", type: "success" });
       await loadData();
     } catch (err: any) {
@@ -81,7 +81,7 @@ export default function ReferralTypesPage() {
 
   const handleToggleActive = async (typeItem: RewardType) => {
     try {
-      await api.djangoPut("/admin/reward-types/", {
+      await api.put("/admin/reward-types/", {
         id: typeItem.id,
         is_active: !typeItem.is_active,
       });
@@ -96,7 +96,7 @@ export default function ReferralTypesPage() {
     e.preventDefault();
     try {
       setSavingPoints(true);
-      const updated = await api.djangoPut<PointsConfig>("/admin/points-config/", pointsConfig);
+      const updated = await api.put<PointsConfig>("/admin/points-config/", pointsConfig);
       setPointsConfig(updated);
       setNotice({ text: "Points configuration updated successfully.", type: "success" });
     } catch (err: any) {

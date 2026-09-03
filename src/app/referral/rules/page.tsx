@@ -45,12 +45,12 @@ export default function ReferralRulesPage() {
   const loadRules = async () => {
     try {
       setLoading(true);
-      const data = await api.djangoGet<ReferralRule[]>("/admin/referral-rules/");
+      const data = await api.get<ReferralRule[]>("/admin/referral-rules/");
       setRules(data || []);
       setNotice(null);
     } catch (err: any) {
       setNotice({
-        text: err.message || "Could not fetch referral rules from Django API.",
+        text: err.message || "Could not fetch referral rules.",
         type: "error",
       });
     } finally {
@@ -69,7 +69,7 @@ export default function ReferralRulesPage() {
       return;
     }
     try {
-      await api.djangoPost("/admin/referral-rules/", {
+      await api.post("/admin/referral-rules/", {
         ...newRule,
         limit_per_user: newRule.limit_per_user ? Number(newRule.limit_per_user) : null,
       });
@@ -92,7 +92,7 @@ export default function ReferralRulesPage() {
   const handleToggleStatus = async (rule: ReferralRule) => {
     const nextStatus = rule.status === "active" ? "inactive" : "active";
     try {
-      await api.djangoPatch(`/admin/referral-rules/${rule.id}/status/`, { status: nextStatus });
+      await api.patch(`/admin/referral-rules/${rule.id}/status/`, { status: nextStatus });
       setNotice({ text: `Rule set to ${nextStatus}.`, type: "success" });
       await loadRules();
     } catch (err: any) {
@@ -102,7 +102,7 @@ export default function ReferralRulesPage() {
 
   const handleDuplicate = async (ruleId: number) => {
     try {
-      await api.djangoPost(`/admin/referral-rules/${ruleId}/duplicate/`);
+      await api.post(`/admin/referral-rules/${ruleId}/duplicate/`);
       setNotice({ text: "Rule duplicated successfully.", type: "success" });
       await loadRules();
     } catch (err: any) {
@@ -113,7 +113,7 @@ export default function ReferralRulesPage() {
   const handleDelete = async (ruleId: number) => {
     if (!confirm("Are you sure you want to delete this referral rule?")) return;
     try {
-      await api.djangoDelete(`/admin/referral-rules/${ruleId}/`);
+      await api.delete(`/admin/referral-rules/${ruleId}/`);
       setNotice({ text: "Rule deleted successfully.", type: "success" });
       await loadRules();
     } catch (err: any) {
