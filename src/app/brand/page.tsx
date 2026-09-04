@@ -154,6 +154,7 @@ export default function BrandListPage() {
                 <Th>Category</Th>
                 <Th>Contact Person</Th>
                 <Th>Live Offers</Th>
+                <Th>Clicks</Th>
                 <Th>Conversions</Th>
                 <Th>Commission</Th>
                 <Th>Status</Th>
@@ -164,13 +165,18 @@ export default function BrandListPage() {
               {brands.map((b) => (
                 <tr key={b._id} className="hover:bg-black/5 transition-colors">
                   <Td>
-                    <p className="font-bold text-[var(--ink)]">{b.name}</p>
+                    <Link
+                      href={`/brand/${b._id}`}
+                      className="font-bold text-[var(--ink)] hover:text-[var(--violet)] transition-colors hover:underline"
+                    >
+                      {b.name}
+                    </Link>
                     {b.website && (
                       <a
                         href={b.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-xs text-[var(--muted)] hover:text-[var(--violet)]"
+                        className="block text-xs text-[var(--muted)] hover:text-[var(--violet)]"
                       >
                         {b.website.replace("https://", "")}
                       </a>
@@ -186,6 +192,7 @@ export default function BrandListPage() {
                     <p className="text-xs text-[var(--muted)]">{b.email}</p>
                   </Td>
                   <Td className="font-mono text-[var(--muted)]">{b.offersCount || 0} offers</Td>
+                  <Td className="font-mono font-semibold text-[var(--ink)]">{num(b.clicks || 0)}</Td>
                   <Td className="font-mono font-bold text-[var(--teal)]">{num(b.conversions || 0)}</Td>
                   <Td className="font-mono text-[var(--ink)]">{inr(b.commissionEarned || 0)}</Td>
                   <Td>
@@ -200,14 +207,22 @@ export default function BrandListPage() {
                     />
                   </Td>
                   <Td className="text-right">
-                    <button
-                      onClick={() => handleToggleStatus(b)}
-                      className={`text-xs font-semibold hover:underline ${
-                        b.status === "active" ? "text-[var(--amber)]" : "text-[var(--teal)]"
-                      }`}
-                    >
-                      {b.status === "active" ? "Suspend" : "Activate"}
-                    </button>
+                    <div className="inline-flex items-center gap-2 justify-end">
+                      <Link
+                        href={`/brand/${b._id}`}
+                        className="rounded bg-[var(--paper)] border border-[var(--line)] px-2.5 py-1 text-xs font-semibold text-[var(--ink)] hover:bg-[var(--violet-dim)] hover:border-[var(--violet)] transition-colors"
+                      >
+                        View Profile
+                      </Link>
+                      <button
+                        onClick={() => handleToggleStatus(b)}
+                        className={`text-xs font-semibold hover:underline ${
+                          b.status === "active" ? "text-[var(--amber)]" : "text-[var(--teal)]"
+                        }`}
+                      >
+                        {b.status === "active" ? "Suspend" : "Activate"}
+                      </button>
+                    </div>
                   </Td>
                 </tr>
               ))}

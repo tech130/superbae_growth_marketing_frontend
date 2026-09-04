@@ -149,6 +149,7 @@ const modules: NavModule[] = [
       {
         label: "Tracking & Approvals",
         items: [
+          { href: "/referral/users", label: "User Referral Details" },
           { href: "/referral/pending", label: "Pending Referrals" },
           { href: "/referral/successful", label: "Successful Referrals" },
           { href: "/referral/rejected", label: "Rejected Referrals" },
@@ -202,6 +203,10 @@ const modules: NavModule[] = [
           { href: "/brand/revenue", label: "Brand Revenue" },
           { href: "/brand/payouts", label: "Brand Payouts" },
         ],
+      },
+      {
+        label: "Testing & Simulator",
+        items: [{ href: "/brand-testing-website", label: "Promoter Test Storefront" }],
       },
     ],
   },
